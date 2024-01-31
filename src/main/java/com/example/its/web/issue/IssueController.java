@@ -1,23 +1,21 @@
 package com.example.its.web.issue;
 
-import com.example.its.domain.issue.IssueEntity;
-import java.util.List;
+import com.example.its.domain.issue.IssueService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
+@RequiredArgsConstructor
 public class IssueController {
+
+  private final IssueService issueService;
 
   // get / issues
   @GetMapping("/issues")
   public String showList(Model model) {
-    var issueList = List.of(
-        new IssueEntity(1, "概要1", "説明1"),
-        new IssueEntity(2, "概要2", "説明2"),
-        new IssueEntity(3, "概要3", "説明3")
-    );
-    model.addAttribute("issueList", issueList);
+    model.addAttribute("issueList", issueService.findAll());
     return "issues/List";
   }
 }
